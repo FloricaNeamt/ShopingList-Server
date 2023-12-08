@@ -91,5 +91,5 @@ const data = [
         pret: 9,
         cantitate: '300g'
     }]
-
-module.exports = data;
+export default data
+// module.exports = data;
