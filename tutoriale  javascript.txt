@@ -1,0 +1,39 @@
+STRING MANIPULATION
+https://www.w3schools.com/js/js_string_methods.asp
+
+JS FUNCTIONS
+https://www.w3schools.com/js/js_function_definition.asp
+
+DATE 
+https://www.w3schools.com/js/js_date_methods.asp
+
+ARRAY MANIPULATION
+https://www.w3schools.com/js/js_array_methods.asp
+
+NODE
+https://www.w3schools.com/nodejs/
+
+**ceva extra**
+
+JS CLASSES
+https://javascript.info/class
+
+HTTP METHODS(see my example on the final web view test)
+http://www.restapitutorial.com/lessons/httpmethods.html
+
+ ._________________________________.
+ |                                 |
+ |                 _               |
+ |                //\              |
+ |          //-- //  \  ========,  |
+ |         //   //    \        /   |
+ |        //   //      \      /    |
+ |  __________  ___  __  _________ |
+ |       /     \        //  //     |
+ |      /       \      //  //      |
+ |     /__________________//       |
+ |                \  //            |
+ |                 \//             |
+ |                  "              |
+ |                                 |
+ '---------------------------------'

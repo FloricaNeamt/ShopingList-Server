@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #3498db;
+            color: #fff;
+        }
+        main {
+            padding: 20px;
+            background-color: #ecf0f1;
+            min-height: 100vh;
+        }
+        #productList {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Shopping List</h1>
+    </header>
+
+    <main>
+        <h2>Product List</h2>
+        <div id="productList"></div>
+    </main>
+
+    <script>
+        fetch('http://localhost:8080')
+        .then(response => response.json())
+        .then(products => {
+            displayProducts(products);
+        })
+
+        function displayProducts(products) {
+            var productListContainer = document.getElementById('productList');
+            products.forEach(product => {
+                var productItem = document.createElement('div');
+                productItem.classList.add('product-item');
+                productItem.innerHTML = `
+                    <h3>${product.name}</h3>
+                    
+                `;
+                productListContainer.appendChild(productItem);
+            })
+        }        
+    </script>
+
+    <footer>
+        <p>&copy; 2023 Flori Website. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
