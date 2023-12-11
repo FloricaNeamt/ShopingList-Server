@@ -1,42 +1,65 @@
-import data from './data.js'
-var alimente = data
+import knex from 'knex'
+import config from './knexfile.js';
+const db = knex(config);
+const productTable = 'product'
 
-export function getAliment(category)
-{
-    if (category){
-        const response = alimente.filter((aliment)=> {
-            return aliment.categorie== category;
-        })
-        return response;
-    }
-    else{
-        // const productNames = alimente.map(aliment => aliment.name);
-        // res.send(productNames)
-        return alimente;
+export async function getAllProducts(category) {
+    try{
+        let product ;
+        if(category)
+            product = await db.select('*').where('category',category).from(productTable);
+        else
+            product = await db.select('*').from(productTable);
+
+        console.log(product);
+        return product;
 
     }
-}
-export function addAliment(aliment){
-    alimente.push(aliment)
-}
-export function deleteAliment(alimentName){
-    alimente = alimente.filter((aliment)=> {
-        return aliment.name != alimentName});
-}
-export function updateAliment(alimentBody,id){
-    let objIndex =  alimente.findIndex((aliment) => id == aliment.id )
-    if(objIndex!= -1){
-        if(alimentBody.name)
-            alimente[objIndex].name = alimentBody.name
-        if(alimentBody.cantitate)
-            alimente[objIndex].cantitate = alimentBody.cantitate
-        if(alimentBody.pret)
-            alimente[objIndex].pret = alimentBody.pret 
-        if(alimentBody.place)
-            alimente[objIndex].place = alimentBody.place 
-        return true//S-a gasit elementul
+    catch (error) {
+      console.error('Error retrieving product:', error);
+    } 
+  }
+  
+export async function addProducts(product) {
+try{
+    let result = await db.insert([
+            {  name: product.name, category: product.category, price: product.price, quantity: product.quantity, place: product.place}], 
+            )
+            .into(productTable)
+    console.log(result)
     }
-    else{
-        return false//Nu s-a gasit elementul
+catch (error) {
+    console.error(error.stack);
+    } 
+
+}
+
+export async function deleteProducts(productName) {
+try{
+    let result = await db(productTable)
+    .where('name', productName)
+    .del()
+    console.log(result)
     }
+catch (error) {
+    console.error(error.stack);
+    } 
+
+}
+
+export async function updateProducts(productBody, idReq){
+    try{
+        let result = await db(productTable).where({ id: idReq }).update({ 
+            name: productBody.name, category:productBody.category,  price:productBody.price, quantity: productBody.quantity, place:productBody.place, },['id','name','category', 'price', 'quantity', 'place'])
+        console.log(result.length)
+        if(result.length!=0)
+            return true//S-a gasit elementul
+        else
+            return false//Nu s-a gasit elementul
+
+        }
+    catch(error) {
+        console.error(error.stack);
+    } 
+    
 }
