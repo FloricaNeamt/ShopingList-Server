@@ -105,6 +105,21 @@ function generate_token(length){
     return b.join("");
 }
 
+export async function checkAuth(token) {
+    token = token?.replace('Bearer ', '');
+    if (!token) {
+        return {success:false, message:'Token isnot exist'}
+    }
+    let user = await getUserByToken(token);
+    if (!user) {
+        return {success:false, message:'Token isnot correct'}
+
+    }
+    // return {succes:true,...user};
+    user.success = true;
+    return user;
+}
+
 export async function getUserByToken(token){
     const result = await db(userTable).where('token',token);
     if(result.length === 0)
@@ -119,7 +134,7 @@ export async function auth(user) {
         const result = await db(userTable).where('username', user.username);
         // Check if the user exists
         if (result.length === 0) {
-            return false; // User does not exist
+            return {success: false}; // User does not exist
         }
   
         const hashedPassword = result[0].password; 
@@ -136,6 +151,6 @@ export async function auth(user) {
 
     } catch (error) {
       console.error('Error checking user existence', error);
-      return false; // Return false in case of an error
+      return {success: false}; // Return false in case of an error
     } 
   }
